@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyCart Demo</title>
+  <script src="../dist/easycart.js"></script>
+  <style>
+    body { font-family: sans-serif; max-width: 1000px; margin: 0 auto; padding: 20px; }
+    .product { border: 1px solid #eee; padding: 20px; margin: 20px 0; border-radius: 5px; }
+    button { padding: 10px 15px; background: #3490dc; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    .cart-btn { position: fixed; top: 20px; right: 20px; }
+  </style>
+</head>
+<body>
+  <h1>EasyCart Demo</h1>
+  
+  <button class="cart-btn" data-easycart-open>
+    View Cart
+  </button>
+  
+  <div class="product">
+    <h2>Cours de Yoga</h2>
+    <p>Premium cotton t-shirt, perfect for any occasion.</p>
+    <p><strong>€80.00</strong></p>
+    <button 
+      data-easycart-add
+      data-stripe-price-id="price_1LnMktArvnr2Ty5bPwusjhDd"
+      data-product-name="Yoga Course"
+      data-product-price="80.00"
+      data-product-image="https://www.nuclearblast.com/cdn/shop/files/gremlins_pocketgizmodarkgrey_tops_tshirt_abytex600_3665361026044_414725-600_nomodel_whitebackground_front.jpg">
+      Add to Cart
+    </button>
+  </div>
+  
+  <div class="product">
+    <h2>Coffee Mug</h2>
+    <p>Ceramic mug with a beautiful design.</p>
+    <p><strong>€12.99</strong></p>
+    <button 
+      data-easycart-add
+      data-stripe-price-id="price_0987654321"
+      data-product-name="Coffee Mug"
+      data-product-price="12.99"
+      data-product-image="https://www.nuclearblast.com/cdn/shop/files/gremlins_pocketgizmodarkgrey_tops_tshirt_abytex600_3665361026044_414725-600_nomodel_whitebackground_front.jpg">
+      Add to Cart
+    </button>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialisation d'EasyCart
+      EasyCart.init({
+        stripePublicKey: 'pk_test_51IqcDrArvnr2Ty5bFkNyMQ0HTp6osyWjZe0rA685xkFm75ATuoXs4WEUYmdYkAolt06OzEcFmcdb7MbPR94mtHKn00ny6WDoD8',
+        checkoutEndpoint: 'https://bzr9piizpj.execute-api.eu-west-3.amazonaws.com/create-checkout',
+        currency: 'EUR',
+        language: 'fr', // Utiliser le français
+        theme: 'light',
+        position: 'right'
+      });
+      
+      // Vérifier si le paiement a été effectué
+      document.addEventListener('DOMContentLoaded', function() {
+        EasyCart.checkPaymentSuccess();
+      });
+      
+    });
+  </script>
+</body>
+</html>

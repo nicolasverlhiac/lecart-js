@@ -22,7 +22,11 @@
         "dev": "rollup -c -w",
         "build": "rollup -c",
         "test": "jest",
-        "lint": "eslint src/**/*.ts"
+        "lint": "eslint src/**/*.ts",
+        "release": "./scripts/release.sh",
+        "release:patch": "./scripts/release.sh patch",
+        "release:minor": "./scripts/release.sh minor",
+        "release:major": "./scripts/release.sh major"
     },
     "keywords": [
         "cart",

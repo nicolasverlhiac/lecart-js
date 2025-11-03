@@ -1,6 +1,6 @@
 import enTranslations from './en';
 import frTranslations from './fr';
-import { EasyCartConfig } from '../core';
+import { LeCartConfig } from '../core';
 
 type TranslationPath = string;
 type TranslationParams = Record<string, any>;
@@ -16,7 +16,7 @@ let translations: any = { ...defaultTranslations.en };
 let customTranslations: Record<string, any> = {};
 
 // Initialisation des traductions
-export function initTranslations(config: EasyCartConfig): void {
+export function initTranslations(config: LeCartConfig): void {
   customTranslations = config.translations || {};
   
   let initialLanguage = config.language || 'en';
@@ -41,7 +41,7 @@ function hasLanguage(lang: string): boolean {
 // Changement de langue
 export function setLanguage(lang: string): void {
   if (!hasLanguage(lang)) {
-    console.warn(`EasyCart: Language "${lang}" not available, falling back to English`);
+    console.warn(`LeCart: Language "${lang}" not available, falling back to English`);
     lang = 'en';
   }
   
@@ -71,7 +71,7 @@ export function t(path: TranslationPath, params?: TranslationParams): string {
   }
   
   if (typeof value !== 'string') {
-    console.warn(`EasyCart: Missing translation for "${path}"`);
+    console.warn(`LeCart: Missing translation for "${path}"`);
     return path;
   }
   

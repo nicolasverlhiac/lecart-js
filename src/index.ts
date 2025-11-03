@@ -2,28 +2,29 @@ import { init, getConfig } from './core';
 import { openCart, closeCart } from './ui/cart-ui';
 import { clearCart } from './core/cart';
 import { setLanguage } from './i18n';
-import { checkPaymentSuccess } from './api/stripe'; // Ajout de l'import
+import { checkPaymentSuccess } from './api/stripe';
 
 // API publique exposée
-const EasyCart = {
+const LeCart = {
   init,
   openCart,
   closeCart,
   clearCart,
   setLanguage,
-  checkPaymentSuccess
+  checkPaymentSuccess,
+  getConfig
 };
 
-// Auto-initialisation si data-easycart-autoinit est présent
+// Auto-initialisation si data-lecart-autoinit est présent
 document.addEventListener('DOMContentLoaded', () => {
-  const autoInitEl = document.querySelector('[data-easycart-autoinit]');
+  const autoInitEl = document.querySelector('[data-lecart-autoinit]');
   if (autoInitEl) {
-    const config = JSON.parse(autoInitEl.getAttribute('data-easycart-config') || '{}');
-    EasyCart.init(config);
+    const config = JSON.parse(autoInitEl.getAttribute('data-lecart-config') || '{}');
+    LeCart.init(config);
   }
 });
 
 // Exposition globale
-(window as any).EasyCart = EasyCart;
+(window as any).LeCart = LeCart;
 
-export default EasyCart;
+export default LeCart;

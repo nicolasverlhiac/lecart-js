@@ -1,11 +1,19 @@
 {
-    "name": "easycart",
+    "name": "lecart",
     "version": "0.1.0",
-    "description": "Simple e-commerce cart integration for HTML/CSS websites",
+    "description": "Simple Stripe cart library for static websites - Zero dependencies, lightweight, and easy to integrate",
     "type": "module",
-    "main": "dist/easycart.js",
-    "module": "dist/easycart.esm.js",
+    "main": "dist/lecart.js",
+    "module": "dist/lecart.esm.js",
     "types": "dist/index.d.ts",
+    "files": [
+        "dist/",
+        "LICENSE"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/votre-nom/lecart.git"
+    },
     "scripts": {
         "dev": "rollup -c -w",
         "build": "rollup -c",
@@ -13,10 +21,15 @@
         "lint": "eslint src/**/*.ts"
     },
     "keywords": [
-        "ecommerce",
         "cart",
         "stripe",
-        "checkout"
+        "checkout",
+        "ecommerce",
+        "shopping-cart",
+        "stripe-checkout",
+        "static-sites",
+        "zero-dependencies",
+        "lightweight"
     ],
     "author": "",
     "license": "MIT",
@@ -31,6 +44,7 @@
         "rollup-plugin-dts": "^6.2.1",
         "rollup-plugin-esbuild": "^6.2.1",
         "tslib": "^2.8.1",
-        "typescript": "^5.8.2"
+        "typescript": "^5.8.2",
+        "rollup-plugin-copy": "^3.5.0"
     }
 }

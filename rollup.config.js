@@ -1,6 +1,7 @@
 import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
 import dts from 'rollup-plugin-dts';
+import copy from 'rollup-plugin-copy';
 
 // Configuration pour les builds
 const config = [
@@ -9,33 +10,39 @@ const config = [
     input: 'src/index.ts',
     output: [
       {
-        file: 'dist/easycart.js',
+        file: 'dist/lecart.js',
         format: 'umd',
-        name: 'EasyCart',
+        name: 'LeCart',
         sourcemap: true
       },
       {
-        file: 'dist/easycart.min.js',
+        file: 'dist/lecart.min.js',
         format: 'umd',
-        name: 'EasyCart',
+        name: 'LeCart',
         sourcemap: true
       },
       {
-        file: 'dist/easycart.esm.js',
+        file: 'dist/lecart.esm.js',
         format: 'esm',
         sourcemap: true
       }
     ],
     plugins: [
       typescript({ tsconfig: './tsconfig.json' }),
-      terser()
+      terser(),
+      // Copier le CSS dans le dossier dist
+      copy({
+        targets: [
+          { src: 'src/styles/lecart.css', dest: 'dist' }
+        ]
+      })
     ]
   },
   // Build pour les types TypeScript
   {
     input: 'src/index.ts',
     output: {
-      file: 'dist/easycart.d.ts',
+      file: 'dist/lecart.d.ts',
       format: 'es'
     },
     plugins: [dts()]

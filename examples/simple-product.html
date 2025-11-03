@@ -3,19 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EasyCart Demo</title>
-  <script src="../dist/easycart.js"></script>
+  <title>LeCart Demo</title>
+  <!-- Ajout du CSS séparé avant le JavaScript -->
+  <link rel="stylesheet" href="../dist/lecart.css">
+  <script src="../dist/lecart.js"></script>
   <style>
     body { font-family: sans-serif; max-width: 1000px; margin: 0 auto; padding: 20px; }
     .product { border: 1px solid #eee; padding: 20px; margin: 20px 0; border-radius: 5px; }
     button { padding: 10px 15px; background: #3490dc; color: white; border: none; border-radius: 4px; cursor: pointer; }
     .cart-btn { position: fixed; top: 20px; right: 20px; }
+    
+    /* Exemple de personnalisation des variables CSS d'LeCart */
+    :root {
+      --lecart-accent-color: #3490dc; /* Couleur harmonisée avec les boutons */
+      --lecart-primary-color: #4a4a4a;
+    }
   </style>
 </head>
 <body>
-  <h1>EasyCart Demo</h1>
+  <h1>LeCart Demo</h1>
   
-  <button class="cart-btn" data-easycart-open>
+  <button class="cart-btn" data-lecart-open>
     View Cart
   </button>
   
@@ -24,7 +32,7 @@
     <p>Premium cotton t-shirt, perfect for any occasion.</p>
     <p><strong>€80.00</strong></p>
     <button 
-      data-easycart-add
+      data-lecart-add
       data-stripe-price-id="price_1LnMktArvnr2Ty5bPwusjhDd"
       data-product-name="Yoga Course"
       data-product-price="80.00"
@@ -38,7 +46,7 @@
     <p>Ceramic mug with a beautiful design.</p>
     <p><strong>€12.99</strong></p>
     <button 
-      data-easycart-add
+      data-lecart-add
       data-stripe-price-id="price_0987654321"
       data-product-name="Coffee Mug"
       data-product-price="12.99"
@@ -49,22 +57,36 @@
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Initialisation d'EasyCart
-      EasyCart.init({
+      // Initialisation d'LeCart
+      LeCart.init({
         stripePublicKey: 'pk_test_51IqcDrArvnr2Ty5bFkNyMQ0HTp6osyWjZe0rA685xkFm75ATuoXs4WEUYmdYkAolt06OzEcFmcdb7MbPR94mtHKn00ny6WDoD8',
         checkoutEndpoint: 'https://bzr9piizpj.execute-api.eu-west-3.amazonaws.com/create-checkout',
         currency: 'EUR',
         language: 'fr', // Utiliser le français
         theme: 'light',
-        position: 'right'
+        position: 'right',
+        // Vous pouvez spécifier un chemin personnalisé pour le CSS si nécessaire
+        // cssPath: 'chemin/vers/votre/css/personnalisé'
       });
       
       // Vérifier si le paiement a été effectué
-      document.addEventListener('DOMContentLoaded', function() {
-        EasyCart.checkPaymentSuccess();
-      });
+      LeCart.checkPaymentSuccess();
       
+      // Exemple de changement de thème dynamique (facultatif)
+      document.getElementById('theme-toggle')?.addEventListener('click', function() {
+        const currentTheme = document.querySelector('.lecart-container').classList.contains('lecart-theme-dark') 
+          ? 'dark' 
+          : 'light';
+        
+        // Bascule entre thème clair et sombre
+        LeCart.setTheme(currentTheme === 'light' ? 'dark' : 'light');
+      });
     });
   </script>
+  
+  <!-- Bouton optionnel pour démontrer le changement de thème -->
+  <button id="theme-toggle" style="position: fixed; bottom: 20px; right: 20px; background: #333; color: white;">
+    Changer de thème
+  </button>
 </body>
 </html>

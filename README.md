@@ -1,5 +1,5 @@
 
-# EasyCart
+# LeCart
 
 Une librairie JavaScript légère pour ajouter facilement un panier d'achat et une intégration Stripe à n'importe quel site HTML/CSS.
 
@@ -18,17 +18,61 @@ Une librairie JavaScript légère pour ajouter facilement un panier d'achat et u
 ### Via CDN (recommandé)
 
 ```html
-<script src="https://cdn.example.com/easycart.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="https://cdn.example.com/lecart.min.css">
+<!-- JavaScript -->
+<script src="https://cdn.example.com/lecart.min.js"></script>
 ```
 
 ### Via npm
 
 ```bash
-npm install easycart
+npm install lecart
 ```
 
 ```js
-import EasyCart from 'easycart';
+// Importer le JavaScript
+import LeCart from 'lecart';
+// Importer le CSS
+import 'lecart/dist/lecart.css';
+```
+
+## 🎨 Personnalisation des styles
+
+Vous pouvez personnaliser l'apparence d'LeCart de trois façons:
+
+### 1. Variables CSS
+
+LeCart utilise des variables CSS qui peuvent être redéfinies:
+
+```css
+:root {
+  --lecart-primary-color: #your-color;
+  --lecart-accent-color: #your-accent-color;
+  /* et autres variables */
+}
+```
+
+### 2. Classes CSS
+
+Vous pouvez surcharger les styles par défaut en ciblant les classes LeCart:
+
+```css
+.lecart-checkout-btn {
+  background-color: #ff6b6b;
+  border-radius: 0;
+}
+```
+
+### 3. Thèmes intégrés
+
+LeCart propose deux thèmes par défaut: clair et sombre.
+
+```js
+LeCart.init({
+  // ...
+  theme: 'dark' // ou 'light'
+});
 ```
 
 ## 🛠️ Utilisation
@@ -38,7 +82,7 @@ import EasyCart from 'easycart';
 ```html
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    EasyCart.init({
+    LeCart.init({
       stripePublicKey: 'pk_test_your_key',
       checkoutEndpoint: 'https://your-api.com/create-checkout',
       currency: 'EUR',
@@ -52,7 +96,7 @@ import EasyCart from 'easycart';
 
 ```html
 <button 
-  data-easycart-add
+  data-lecart-add
   data-stripe-price-id="price_1234567890"
   data-product-name="T-shirt Premium"
   data-product-price="29.99"
@@ -64,7 +108,7 @@ import EasyCart from 'easycart';
 ### 3. Ajouter un bouton d'ouverture du panier
 
 ```html
-<button data-easycart-open>Voir le panier</button>
+<button data-lecart-open>Voir le panier</button>
 ```
 
 ### 4. Configuration du backend
@@ -127,10 +171,10 @@ exports.handler = async (event) => {
 
 ## 🌍 Internationalisation
 
-EasyCart supporte plusieurs langues et permet d'ajouter facilement vos propres traductions:
+LeCart supporte plusieurs langues et permet d'ajouter facilement vos propres traductions:
 
 ```js
-EasyCart.init({
+LeCart.init({
   // Autres options...
   language: 'fr',
   translations: {
@@ -148,17 +192,17 @@ EasyCart.init({
 
 ```js
 // Initialisation
-EasyCart.init(config);
+LeCart.init(config);
 
 // Ouvrir/fermer le panier
-EasyCart.openCart();
-EasyCart.closeCart();
+LeCart.openCart();
+LeCart.closeCart();
 
 // Vider le panier
-EasyCart.clearCart();
+LeCart.clearCart();
 
 // Changer de langue
-EasyCart.setLanguage('es');
+LeCart.setLanguage('es');
 ```
 
 ## 📝 Licence

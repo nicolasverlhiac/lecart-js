@@ -4,7 +4,7 @@ import { initUI } from '../ui/cart-ui';
 import { initTranslations } from '../i18n';
 import { initCart } from './cart';
 
-export interface EasyCartConfig {
+export interface LeCartConfig {
   stripePublicKey: string;
   checkoutEndpoint: string;
   currency?: string;
@@ -15,37 +15,39 @@ export interface EasyCartConfig {
   fallbackLanguage?: string;
   position?: 'right' | 'left';
   cartLifetime?: number; // en heures
+  cssPath?: string; // Nouveau: chemin vers le fichier CSS
 }
 
-const DEFAULT_CONFIG: Partial<EasyCartConfig> = {
+const DEFAULT_CONFIG: Partial<LeCartConfig> = {
   currency: 'EUR',
   theme: 'light',
   language: 'en',
   detectBrowserLanguage: true,
   fallbackLanguage: 'en',
   position: 'right',
-  cartLifetime: 24 // 24 heures par défaut
+  cartLifetime: 24, // 24 heures par défaut
+  cssPath: 'https://cdn.example.com/lecart.min.css'
 };
 
-let config: EasyCartConfig;
+let config: LeCartConfig;
 let isInitialized = false;
 
-export function init(userConfig: Partial<EasyCartConfig>): void {
+export function init(userConfig: Partial<LeCartConfig>): void {
   if (isInitialized) {
-    console.warn('EasyCart already initialized');
+    console.warn('LeCart already initialized');
     return;
   }
 
   // Fusion des configurations
-  config = { ...DEFAULT_CONFIG, ...userConfig } as EasyCartConfig;
+  config = { ...DEFAULT_CONFIG, ...userConfig } as LeCartConfig;
 
   // Vérification des configurations requises
   if (!config.stripePublicKey) {
-    throw new Error('EasyCart: stripePublicKey is required');
+    throw new Error('LeCart: stripePublicKey is required');
   }
-  
+
   if (!config.checkoutEndpoint) {
-    throw new Error('EasyCart: checkoutEndpoint is required');
+    throw new Error('LeCart: checkoutEndpoint is required');
   }
 
   // Initialisation des modules
@@ -56,12 +58,12 @@ export function init(userConfig: Partial<EasyCartConfig>): void {
   setupEventListeners();
 
   isInitialized = true;
-  console.log('EasyCart initialized successfully');
+  console.log('LeCart initialized successfully');
 }
 
-export function getConfig(): EasyCartConfig {
+export function getConfig(): LeCartConfig {
   if (!isInitialized) {
-    throw new Error('EasyCart not initialized');
+    throw new Error('LeCart not initialized');
   }
   return config;
 }

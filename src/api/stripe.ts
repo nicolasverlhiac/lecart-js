@@ -49,7 +49,7 @@ export async function createCheckoutSession(data: CheckoutData): Promise<void> {
     window.location.href = session.url;
     
   } catch (error) {
-    console.error('EasyCart: Failed to create checkout session', error);
+    console.error('LeCart: Failed to create checkout session', error);
     hideLoadingOverlay();
     showError(t('checkout.error'));
   }
@@ -83,36 +83,103 @@ function generateCartId(): string {
 // Fonctions d'affichage UI (loading, success, error)
 function showLoadingOverlay(): void {
   const overlay = document.createElement('div');
-  overlay.className = 'easycart-loading-overlay';
+  overlay.className = 'lecart-loading-overlay';
   overlay.innerHTML = `
-    <div class="easycart-loading-spinner"></div>
-    <div class="easycart-loading-text">${t('checkout.processing')}</div>
+    <div class="lecart-loading-spinner"></div>
+    <div class="lecart-loading-text">${t('checkout.processing')}</div>
   `;
   
-  // Styles pour l'overlay
-  applyOverlayStyles(overlay);
+  // Appliquer des styles spécifiques au thème si nécessaire
+  const config = getConfig();
+  if (config.theme === 'dark') {
+    overlay.classList.add('lecart-theme-dark');
+  }
   
   document.body.appendChild(overlay);
 }
 
 function hideLoadingOverlay(): void {
-  const overlay = document.querySelector('.easycart-loading-overlay');
+  const overlay = document.querySelector('.lecart-loading-overlay');
   if (overlay && overlay.parentNode) {
     overlay.parentNode.removeChild(overlay);
   }
 }
 
 function showSuccessMessage(message: string): void {
-  // Code pour afficher un message de succès
-  // ...
+  // Création de l'élément de notification avec classes CSS
+  const notification = document.createElement('div');
+  notification.className = 'lecart-notification lecart-notification-success';
+  notification.innerHTML = `
+    <div class="lecart-notification-icon">✓</div>
+    <div class="lecart-notification-message">${message}</div>
+  `;
+  
+  // Ajouter au DOM
+  document.body.appendChild(notification);
+  
+  // Animation d'entrée (via setTimeout pour permettre au navigateur de traiter le DOM)
+  setTimeout(() => {
+    notification.style.opacity = '1';
+    notification.style.transform = 'translateY(0)';
+  }, 10);
+  
+  // Supprimer après 5 secondes
+  setTimeout(() => {
+    notification.style.opacity = '0';
+    notification.style.transform = 'translateY(20px)';
+    
+    // Retirer du DOM après la fin de l'animation
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }, 5000);
 }
 
 function showError(message: string): void {
-  // Code pour afficher un message d'erreur
-  // ...
-}
-
-function applyOverlayStyles(overlay: HTMLElement): void {
-  // Styles pour l'overlay et le spinner
-  // ...
+  // Création de l'élément de notification d'erreur avec classes CSS
+  const notification = document.createElement('div');
+  notification.className = 'lecart-notification lecart-notification-error';
+  notification.innerHTML = `
+    <div class="lecart-notification-icon">✕</div>
+    <div class="lecart-notification-message">${message}</div>
+  `;
+  
+  // Ajouter au DOM
+  document.body.appendChild(notification);
+  
+  // Animation d'entrée
+  setTimeout(() => {
+    notification.style.opacity = '1';
+    notification.style.transform = 'translateY(0)';
+  }, 10);
+  
+  // Ajouter un bouton de fermeture
+  const closeButton = document.createElement('button');
+  closeButton.innerHTML = '&times;';
+  closeButton.className = 'lecart-notification-close';
+  closeButton.onclick = () => {
+    notification.style.opacity = '0';
+    notification.style.transform = 'translateY(20px)';
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  };
+  
+  notification.appendChild(closeButton);
+  
+  // Supprimer après 8 secondes
+  setTimeout(() => {
+    notification.style.opacity = '0';
+    notification.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }, 8000);
 }

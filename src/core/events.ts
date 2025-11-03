@@ -6,8 +6,8 @@ export function setupEventListeners(): void {
   document.addEventListener('click', (event) => {
     const target = event.target as HTMLElement;
     
-    // Trouver l'élément parent avec data-easycart-add (pour gérer les clics sur les enfants d'un bouton)
-    const addButton = target.closest('[data-easycart-add]');
+    // Trouver l'élément parent avec data-lecart-add (pour gérer les clics sur les enfants d'un bouton)
+    const addButton = target.closest('[data-lecart-add]');
     
     if (addButton) {
       event.preventDefault();
@@ -20,7 +20,7 @@ export function setupEventListeners(): void {
       
       // Vérifier les données requises
       if (!stripePriceId || !name || !priceAttr) {
-        console.error('EasyCart: Missing required product attributes');
+        console.error('LeCart: Missing required product attributes');
         return;
       }
       
@@ -40,7 +40,7 @@ export function setupEventListeners(): void {
     }
     
     // Gérer les boutons d'ouverture du panier
-    const openCartButton = target.closest('[data-easycart-open]');
+    const openCartButton = target.closest('[data-lecart-open]');
     if (openCartButton) {
       event.preventDefault();
       openCart();

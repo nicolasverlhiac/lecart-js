@@ -12,7 +12,11 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/votre-nom/lecart.git"
+        "url": "git+https://github.com/nicolasverlhiac/lecart-js.git"
+    },
+    "homepage": "https://github.com/nicolasverlhiac/lecart-js#readme",
+    "bugs": {
+        "url": "https://github.com/nicolasverlhiac/lecart-js/issues"
     },
     "scripts": {
         "dev": "rollup -c -w",
@@ -31,7 +35,7 @@
         "zero-dependencies",
         "lightweight"
     ],
-    "author": "",
+    "author": "Nicolas Verlhiac",
     "license": "MIT",
     "devDependencies": {
         "@rollup/plugin-terser": "^0.4.4",

@@ -26,7 +26,7 @@ const DEFAULT_CONFIG: Partial<LeCartConfig> = {
   fallbackLanguage: 'en',
   position: 'right',
   cartLifetime: 24, // 24 heures par défaut
-  cssPath: 'https://cdn.example.com/lecart.min.css'
+  cssPath: 'https://unpkg.com/lecart/dist/lecart.css'
 };
 
 let config: LeCartConfig;

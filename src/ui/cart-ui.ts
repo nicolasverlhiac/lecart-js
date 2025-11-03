@@ -23,7 +23,7 @@ function loadStylesheet(): void {
   const link = document.createElement('link');
   link.id = 'lecart-stylesheet';
   link.rel = 'stylesheet';
-  link.href = config.cssPath || 'https://cdn.example.com/lecart/lecart.css';
+  link.href = config.cssPath || 'https://unpkg.com/lecart/dist/lecart.css';
 
   document.head.appendChild(link);
 }

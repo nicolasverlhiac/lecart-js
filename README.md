@@ -1,27 +1,36 @@
 
 # LeCart
 
-Une librairie JavaScript légère pour ajouter facilement un panier d'achat et une intégration Stripe à n'importe quel site HTML/CSS.
+A lightweight JavaScript library to easily add a shopping cart with Stripe integration to any HTML/CSS website.
 
-## 🚀 Caractéristiques
+## 🚀 Features
 
-- **Simplicité d'intégration** - Ajoutez un panier à votre site avec quelques attributs HTML
-- **Zéro dépendance backend** - Fonctionne avec sites statiques (HTML/CSS/JS)
-- **Persistance du panier** - Les produits restent dans le panier entre les sessions
-- **Checkout Stripe** - Intégration transparente avec Stripe
-- **Multi-langue** - Support intégré pour plusieurs langues
-- **Personnalisable** - Thèmes et styles adaptables à votre site
-- **Léger** - <10kb gzippé
+- **Simple Integration** - Add a cart to your site with just a few HTML attributes
+- **Zero Backend Dependencies** - Works with static sites (HTML/CSS/JS)
+- **Cart Persistence** - Products remain in the cart between sessions
+- **Stripe Checkout** - Seamless Stripe integration
+- **Multi-language** - Built-in support for multiple languages
+- **Customizable** - Themes and styles adaptable to your site
+- **Lightweight** - <10kb gzipped
 
 ## 📦 Installation
 
-### Via CDN (recommandé)
+### Via CDN (recommended)
 
 ```html
 <!-- CSS -->
-<link rel="stylesheet" href="https://cdn.example.com/lecart.min.css">
+<link rel="stylesheet" href="https://unpkg.com/lecart/dist/lecart.css">
 <!-- JavaScript -->
-<script src="https://cdn.example.com/lecart.min.js"></script>
+<script src="https://unpkg.com/lecart/dist/lecart.min.js"></script>
+```
+
+Or using jsDelivr:
+
+```html
+<!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lecart/dist/lecart.css">
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/lecart/dist/lecart.min.js"></script>
 ```
 
 ### Via npm
@@ -31,31 +40,31 @@ npm install lecart
 ```
 
 ```js
-// Importer le JavaScript
+// Import JavaScript
 import LeCart from 'lecart';
-// Importer le CSS
+// Import CSS
 import 'lecart/dist/lecart.css';
 ```
 
-## 🎨 Personnalisation des styles
+## 🎨 Styling Customization
 
-Vous pouvez personnaliser l'apparence d'LeCart de trois façons:
+You can customize LeCart's appearance in three ways:
 
-### 1. Variables CSS
+### 1. CSS Variables
 
-LeCart utilise des variables CSS qui peuvent être redéfinies:
+LeCart uses CSS variables that can be overridden:
 
 ```css
 :root {
   --lecart-primary-color: #your-color;
   --lecart-accent-color: #your-accent-color;
-  /* et autres variables */
+  /* and other variables */
 }
 ```
 
-### 2. Classes CSS
+### 2. CSS Classes
 
-Vous pouvez surcharger les styles par défaut en ciblant les classes LeCart:
+You can override default styles by targeting LeCart classes:
 
 ```css
 .lecart-checkout-btn {
@@ -64,20 +73,20 @@ Vous pouvez surcharger les styles par défaut en ciblant les classes LeCart:
 }
 ```
 
-### 3. Thèmes intégrés
+### 3. Built-in Themes
 
-LeCart propose deux thèmes par défaut: clair et sombre.
+LeCart offers two default themes: light and dark.
 
 ```js
 LeCart.init({
   // ...
-  theme: 'dark' // ou 'light'
+  theme: 'dark' // or 'light'
 });
 ```
 
-## 🛠️ Utilisation
+## 🛠️ Usage
 
-### 1. Initialisation
+### 1. Initialization
 
 ```html
 <script>
@@ -85,43 +94,43 @@ LeCart.init({
     LeCart.init({
       stripePublicKey: 'pk_test_your_key',
       checkoutEndpoint: 'https://your-api.com/create-checkout',
-      currency: 'EUR',
-      language: 'fr'
+      currency: 'USD',
+      language: 'en'
     });
   });
 </script>
 ```
 
-### 2. Ajouter des boutons produit
+### 2. Add Product Buttons
 
 ```html
-<button 
+<button
   data-lecart-add
   data-stripe-price-id="price_1234567890"
-  data-product-name="T-shirt Premium"
+  data-product-name="Premium T-shirt"
   data-product-price="29.99"
   data-product-image="https://example.com/tshirt.jpg">
-  Ajouter au panier
+  Add to Cart
 </button>
 ```
 
-### 3. Ajouter un bouton d'ouverture du panier
+### 3. Add Cart Open Button
 
 ```html
-<button data-lecart-open>Voir le panier</button>
+<button data-lecart-open>View Cart</button>
 ```
 
-### 4. Configuration du backend
+### 4. Backend Configuration
 
-Créez une fonction AWS Lambda pour gérer la création de la session Stripe:
+Create an AWS Lambda function or API endpoint to handle Stripe session creation:
 
 ```javascript
-// Exemple AWS Lambda - fichier handler.js
+// Example AWS Lambda - handler.js
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 exports.handler = async (event) => {
   const { items, success_url, cancel_url, metadata } = JSON.parse(event.body);
-  
+
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -134,7 +143,7 @@ exports.handler = async (event) => {
       cancel_url,
       metadata
     });
-    
+
     return {
       statusCode: 200,
       headers: {
@@ -156,55 +165,64 @@ exports.handler = async (event) => {
 };
 ```
 
-## ⚙️ Options de configuration
+## ⚙️ Configuration Options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `stripePublicKey` | `string` | | **Requis**. Clé publique Stripe |
-| `checkoutEndpoint` | `string` | | **Requis**. URL vers votre backend Lambda |
-| `currency` | `string` | `'EUR'` | Code de la devise (EUR, USD, etc.) |
-| `language` | `string` | `'en'` | Code de langue (fr, en, es, etc.) |
-| `theme` | `string` | `'light'` | Thème (`'light'`, `'dark'` ou `'custom'`) |
-| `position` | `string` | `'right'` | Position du panier (`'right'` ou `'left'`) |
-| `translations` | `object` | `{}` | Traductions personnalisées |
-| `cartLifetime` | `number` | `24` | Durée de vie du panier en heures |
+| `stripePublicKey` | `string` | | **Required**. Stripe public key |
+| `checkoutEndpoint` | `string` | | **Required**. URL to your backend API |
+| `currency` | `string` | `'EUR'` | Currency code (EUR, USD, etc.) |
+| `language` | `string` | `'en'` | Language code (en, fr, es, etc.) |
+| `theme` | `string` | `'light'` | Theme (`'light'`, `'dark'` or `'custom'`) |
+| `position` | `string` | `'right'` | Cart position (`'right'` or `'left'`) |
+| `translations` | `object` | `{}` | Custom translations |
+| `cartLifetime` | `number` | `24` | Cart lifetime in hours |
 
-## 🌍 Internationalisation
+## 🌍 Internationalization
 
-LeCart supporte plusieurs langues et permet d'ajouter facilement vos propres traductions:
+LeCart supports multiple languages and allows you to easily add your own translations:
 
 ```js
 LeCart.init({
-  // Autres options...
+  // Other options...
   language: 'fr',
   translations: {
     fr: {
       cart: {
-        title: 'Mon panier personnalisé',
-        // Autres clés...
+        title: 'My custom cart',
+        // Other keys...
       }
     }
   }
 });
 ```
 
-## 🧰 API JavaScript
+## 🧰 JavaScript API
 
 ```js
-// Initialisation
+// Initialize
 LeCart.init(config);
 
-// Ouvrir/fermer le panier
+// Open/close cart
 LeCart.openCart();
 LeCart.closeCart();
 
-// Vider le panier
+// Clear cart
 LeCart.clearCart();
 
-// Changer de langue
+// Change language
 LeCart.setLanguage('es');
+
+// Check payment success (call after Stripe redirect)
+LeCart.checkPaymentSuccess();
 ```
 
-## 📝 Licence
+## 📝 License
 
 MIT
+
+## 🔗 Links
+
+- [GitHub Repository](https://github.com/nicolasverlhiac/lecart-js)
+- [npm Package](https://www.npmjs.com/package/lecart)
+- [Report Issues](https://github.com/nicolasverlhiac/lecart-js/issues)

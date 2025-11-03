@@ -1,6 +1,6 @@
 {
     "name": "lecart",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Simple Stripe cart library for static websites - Zero dependencies, lightweight, and easy to integrate",
     "type": "module",
     "main": "dist/lecart.js",
@@ -38,17 +38,20 @@
     "author": "Nicolas Verlhiac",
     "license": "MIT",
     "devDependencies": {
+        "@jest/globals": "^30.2.0",
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^12.1.2",
         "@types/jest": "^29.5.14",
         "esbuild": "^0.25.2",
         "eslint": "^9.23.0",
         "jest": "^29.7.0",
+        "jest-environment-jsdom": "^30.2.0",
         "rollup": "^4.39.0",
+        "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-dts": "^6.2.1",
         "rollup-plugin-esbuild": "^6.2.1",
+        "ts-jest": "^29.4.5",
         "tslib": "^2.8.1",
-        "typescript": "^5.8.2",
-        "rollup-plugin-copy": "^3.5.0"
+        "typescript": "^5.8.2"
     }
 }

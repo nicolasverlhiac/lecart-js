@@ -1,6 +1,6 @@
 {
     "name": "lecart",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "Simple Stripe cart library for static websites - Zero dependencies, lightweight, and easy to integrate",
     "type": "module",
     "main": "dist/lecart.js",

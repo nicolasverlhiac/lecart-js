@@ -30,6 +30,7 @@ export async function createCheckoutSession(data: CheckoutData): Promise<void> {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-API-Key': stripePublicKey,
       },
       body: JSON.stringify({
         items: data.items,

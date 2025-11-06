@@ -20,7 +20,7 @@ A lightweight JavaScript library to easily add a shopping cart with Stripe integ
 
 ```html
 <!-- CSS -->
-<link rel="stylesheet" href="https://unpkg.com/lecart/dist/lecart.css">
+<link id="lecart-stylesheet" rel="stylesheet" href="https://unpkg.com/lecart/dist/lecart.css">
 <!-- JavaScript -->
 <script src="https://unpkg.com/lecart/dist/lecart.min.js"></script>
 ```
@@ -29,10 +29,12 @@ Or using jsDelivr:
 
 ```html
 <!-- CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lecart/dist/lecart.css">
+<link id="lecart-stylesheet" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lecart/dist/lecart.css">
 <!-- JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/lecart/dist/lecart.min.js"></script>
 ```
+
+> **Note:** The `id="lecart-stylesheet"` attribute prevents LeCart from loading the CSS file twice if you manually include it in your HTML.
 
 ### Via npm
 
@@ -143,10 +145,21 @@ Visit [app.getlecart.com](https://app.getlecart.com) and create a project to get
   data-stripe-price-id="price_1234567890"
   data-product-name="Premium T-shirt"
   data-product-price="29.99"
-  data-product-image="https://example.com/tshirt.jpg">
+  data-product-image="https://example.com/tshirt.jpg"
+  data-product-variant="Size: L">
   Add to Cart
 </button>
 ```
+
+**Available attributes:**
+
+| Attribute | Required | Description |
+|-----------|----------|-------------|
+| `data-stripe-price-id` | **Required** | Your Stripe Price ID |
+| `data-product-name` | **Required** | Product name displayed in cart |
+| `data-product-price` | **Required** | Product price (number, e.g., "29.99") |
+| `data-product-image` | Optional | Product image URL |
+| `data-product-variant` | Optional | Product variant (e.g., "Size: L", "Color: Blue") |
 
 ### Add Cart Open Button
 

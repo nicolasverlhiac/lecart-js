@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LeCart Demo</title>
   <!-- Ajout du CSS séparé avant le JavaScript -->
-  <link rel="stylesheet" href="../dist/lecart.css">
-  <script src="../dist/lecart.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/lecart/dist/lecart.css">
+  <script src="https://unpkg.com/lecart/dist/lecart.min.js"></script>
   <style>
     body { font-family: sans-serif; max-width: 1000px; margin: 0 auto; padding: 20px; }
     .product { border: 1px solid #eee; padding: 20px; margin: 20px 0; border-radius: 5px; }
@@ -28,13 +28,13 @@
   </button>
   
   <div class="product">
-    <h2>Cours de Yoga</h2>
+    <h2>T-shirt Gremlins</h2>
     <p>Premium cotton t-shirt, perfect for any occasion.</p>
     <p><strong>€80.00</strong></p>
     <button 
       data-lecart-add
       data-stripe-price-id="price_1LnMktArvnr2Ty5bPwusjhDd"
-      data-product-name="Yoga Course"
+      data-product-name="T-shirt Gremlins"
       data-product-price="80.00"
       data-product-image="https://www.nuclearblast.com/cdn/shop/files/gremlins_pocketgizmodarkgrey_tops_tshirt_abytex600_3665361026044_414725-600_nomodel_whitebackground_front.jpg">
       Add to Cart
@@ -47,10 +47,10 @@
     <p><strong>€12.99</strong></p>
     <button 
       data-lecart-add
-      data-stripe-price-id="price_0987654321"
+      data-stripe-price-id="price_1SQ3ieArvnr2Ty5bAzLhOiL1"
       data-product-name="Coffee Mug"
       data-product-price="12.99"
-      data-product-image="https://www.nuclearblast.com/cdn/shop/files/gremlins_pocketgizmodarkgrey_tops_tshirt_abytex600_3665361026044_414725-600_nomodel_whitebackground_front.jpg">
+      data-product-image="https://cdn.commercev3.net/cdn.benningtonpotters.com/images/uploads/9925-american-classic-mug-w-pop.jpg">
       Add to Cart
     </button>
   </div>
@@ -59,8 +59,8 @@
     document.addEventListener('DOMContentLoaded', function() {
       // Initialisation d'LeCart
       LeCart.init({
-        stripePublicKey: 'pk_test_51IqcDrArvnr2Ty5bFkNyMQ0HTp6osyWjZe0rA685xkFm75ATuoXs4WEUYmdYkAolt06OzEcFmcdb7MbPR94mtHKn00ny6WDoD8',
-        checkoutEndpoint: 'https://bzr9piizpj.execute-api.eu-west-3.amazonaws.com/create-checkout',
+        lecartApiKey: 'lecart_ewbCHtnsg7VO9ws_4lc6fTng-97kq31ONtq-aBuuC_Y',
+        checkoutEndpoint: 'https://api.getlecart.com/create-checkout',
         currency: 'EUR',
         language: 'fr', // Utiliser le français
         theme: 'light',

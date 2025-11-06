@@ -13,24 +13,24 @@ interface CheckoutData {
 
 export async function createCheckoutSession(data: CheckoutData): Promise<void> {
   const config = getConfig();
-  const { stripePublicKey, checkoutEndpoint } = config;
-  
+  const { lecartApiKey, checkoutEndpoint } = config;
+
   try {
     // Afficher l'overlay de chargement
     showLoadingOverlay();
-    
+
     // Préparer l'URL de retour avec token pour vider le panier
     const cartId = generateCartId();
     const successUrl = new URL(window.location.href);
     successUrl.searchParams.set('payment_success', 'true');
     successUrl.searchParams.set('cart_id', cartId);
-    
+
     // Appel à l'API de checkout
     const response = await fetch(checkoutEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-API-Key': stripePublicKey,
+        'X-API-Key': lecartApiKey,
       },
       body: JSON.stringify({
         items: data.items,

@@ -3,14 +3,15 @@
 
 A lightweight JavaScript library to easily add a shopping cart with Stripe integration to any HTML/CSS website.
 
-## 🚀 Features
+## 🌟 Features
 
-- **Simple Integration** - Add a cart to your site with just a few HTML attributes
-- **Zero Backend Dependencies** - Works with static sites (HTML/CSS/JS)
-- **Cart Persistence** - Products remain in the cart between sessions
-- **Stripe Checkout** - Seamless Stripe integration
+- **Zero Backend Setup** - Use our free managed API (or self-host if you prefer)
+- **Simple Integration** - Add a cart with just HTML attributes
+- **Works with Static Sites** - Perfect for HTML/CSS/JS sites, GitHub Pages, Netlify, etc.
+- **Cart Persistence** - Products remain in cart between sessions
+- **Stripe Checkout** - Seamless Stripe payment integration
 - **Multi-language** - Built-in support for multiple languages
-- **Customizable** - Themes and styles adaptable to your site
+- **Customizable** - Themes and styles adaptable to your brand
 - **Lightweight** - <10kb gzipped
 
 ## 📦 Installation
@@ -45,6 +46,142 @@ import LeCart from 'lecart';
 // Import CSS
 import 'lecart/dist/lecart.css';
 ```
+
+## 🚀 Quick Start (Recommended - Free Cloud Service)
+
+**No infrastructure setup required!** Get started in 3 steps:
+
+### 1. Create your free account
+Visit [app.getlecart.com](https://app.getlecart.com) and create a project to get your LeCart API key.
+
+> **Why use the cloud service?** It's completely free (no premium tiers, no hidden restrictions) and saves you from managing your own infrastructure. Perfect for getting started quickly without the hassle of setting up AWS Lambda, managing API keys, or configuring CORS policies.
+
+### 2. Add LeCart to your site
+
+```html
+<!-- CSS -->
+<link rel="stylesheet" href="https://unpkg.com/lecart/dist/lecart.css">
+<!-- JavaScript -->
+<script src="https://unpkg.com/lecart/dist/lecart.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    LeCart.init({
+      lecartApiKey: 'lecart_xxxxx',  // From your dashboard
+      checkoutEndpoint: 'https://api.getlecart.com/create-checkout',
+      currency: 'USD',
+      language: 'en'
+    });
+  });
+</script>
+```
+
+### 3. Add product buttons
+
+```html
+<button
+  data-lecart-add
+  data-stripe-price-id="price_1234567890"
+  data-product-name="Premium T-shirt"
+  data-product-price="29.99"
+  data-product-image="https://example.com/tshirt.jpg">
+  Add to Cart
+</button>
+
+<button data-lecart-open>View Cart</button>
+```
+
+**That's it!** 🎉 No backend to manage, no AWS configuration, just add products and start selling.
+
+---
+
+## 🛠️ Usage
+
+### Initialization
+
+**Using Cloud Service (Recommended):**
+
+```html
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    LeCart.init({
+      lecartApiKey: 'lecart_xxxxx',  // Get this from app.getlecart.com
+      checkoutEndpoint: 'https://api.getlecart.com/create-checkout',
+      currency: 'USD',
+      language: 'en',
+      theme: 'light',
+      position: 'right'
+    });
+  });
+</script>
+```
+
+**Using Self-Hosted Backend:**
+
+```html
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    LeCart.init({
+      lecartApiKey: 'your-custom-key',  // Your own API key
+      checkoutEndpoint: 'https://your-domain.com/api/checkout',  // Your backend URL
+      currency: 'USD',
+      language: 'en',
+      theme: 'light',
+      position: 'right'
+    });
+  });
+</script>
+```
+
+> See the [Self-Hosted Backend](#-self-hosted-backend-advanced) section below for setup instructions.
+
+### Add Product Buttons
+
+```html
+<button
+  data-lecart-add
+  data-stripe-price-id="price_1234567890"
+  data-product-name="Premium T-shirt"
+  data-product-price="29.99"
+  data-product-image="https://example.com/tshirt.jpg">
+  Add to Cart
+</button>
+```
+
+### Add Cart Open Button
+
+```html
+<button data-lecart-open>View Cart</button>
+```
+
+---
+
+## ⚙️ Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `lecartApiKey` | `string` | | **Required**. Your LeCart API key from app.getlecart.com |
+| `checkoutEndpoint` | `string` | | **Required**. API endpoint URL |
+| `currency` | `string` | `'EUR'` | Currency code (EUR, USD, GBP, etc.) |
+| `language` | `string` | `'en'` | Language code (en, fr, es, de, it, etc.) |
+| `theme` | `string` | `'light'` | Theme (`'light'`, `'dark'` or `'custom'`) |
+| `position` | `string` | `'right'` | Cart position (`'right'` or `'left'`) |
+| `translations` | `object` | `{}` | Custom translations |
+| `cartLifetime` | `number` | `24` | Cart lifetime in hours |
+
+**Cloud Service (Recommended):**
+```js
+lecartApiKey: 'lecart_xxxxx'  // From app.getlecart.com
+checkoutEndpoint: 'https://api.getlecart.com/create-checkout'
+```
+
+**Self-Hosted (Advanced):**
+```js
+lecartApiKey: 'your-custom-key'  // Define your own
+checkoutEndpoint: 'https://your-domain.com/api/checkout'
+```
+
+---
 
 ## 🎨 Styling Customization
 
@@ -84,99 +221,7 @@ LeCart.init({
 });
 ```
 
-## 🛠️ Usage
-
-### 1. Initialization
-
-```html
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    LeCart.init({
-      stripePublicKey: 'pk_test_your_key',
-      checkoutEndpoint: 'https://your-api.com/create-checkout',
-      currency: 'USD',
-      language: 'en'
-    });
-  });
-</script>
-```
-
-### 2. Add Product Buttons
-
-```html
-<button
-  data-lecart-add
-  data-stripe-price-id="price_1234567890"
-  data-product-name="Premium T-shirt"
-  data-product-price="29.99"
-  data-product-image="https://example.com/tshirt.jpg">
-  Add to Cart
-</button>
-```
-
-### 3. Add Cart Open Button
-
-```html
-<button data-lecart-open>View Cart</button>
-```
-
-### 4. Backend Configuration
-
-Create an AWS Lambda function or API endpoint to handle Stripe session creation:
-
-```javascript
-// Example AWS Lambda - handler.js
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
-exports.handler = async (event) => {
-  const { items, success_url, cancel_url, metadata } = JSON.parse(event.body);
-
-  try {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: items.map(item => ({
-        price: item.stripePriceId,
-        quantity: item.quantity
-      })),
-      mode: 'payment',
-      success_url,
-      cancel_url,
-      metadata
-    });
-
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
-      body: JSON.stringify({ url: session.url })
-    };
-  } catch (error) {
-    return {
-      statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
-      body: JSON.stringify({ error: error.message })
-    };
-  }
-};
-```
-
-## ⚙️ Configuration Options
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `stripePublicKey` | `string` | | **Required**. Stripe public key |
-| `checkoutEndpoint` | `string` | | **Required**. URL to your backend API |
-| `currency` | `string` | `'EUR'` | Currency code (EUR, USD, etc.) |
-| `language` | `string` | `'en'` | Language code (en, fr, es, etc.) |
-| `theme` | `string` | `'light'` | Theme (`'light'`, `'dark'` or `'custom'`) |
-| `position` | `string` | `'right'` | Cart position (`'right'` or `'left'`) |
-| `translations` | `object` | `{}` | Custom translations |
-| `cartLifetime` | `number` | `24` | Cart lifetime in hours |
+---
 
 ## 🌍 Internationalization
 
@@ -189,13 +234,15 @@ LeCart.init({
   translations: {
     fr: {
       cart: {
-        title: 'My custom cart',
+        title: 'Mon panier personnalisé',
         // Other keys...
       }
     }
   }
 });
 ```
+
+---
 
 ## 🧰 JavaScript API
 
@@ -217,12 +264,133 @@ LeCart.setLanguage('es');
 LeCart.checkPaymentSuccess();
 ```
 
+---
+
+## 🔧 Self-Hosted Backend (Advanced)
+
+For developers who want full control, you can host your own checkout API.
+
+### Requirements
+
+- A server/serverless function (AWS Lambda, Vercel, Netlify, etc.)
+- A Stripe account with a **restricted API key**
+
+### Setup Stripe Restricted Key
+
+1. Go to [Stripe Dashboard → API Keys](https://dashboard.stripe.com/apikeys)
+2. Create a restricted key with **only** this permission:
+   - `Write` access to `Checkout Sessions`
+3. Use the key that starts with `rk_test_` or `rk_live_`
+
+### Backend Example (AWS Lambda)
+
+```javascript
+// handler.js
+const stripe = require('stripe')(process.env.STRIPE_RESTRICTED_KEY);
+
+exports.handler = async (event) => {
+  // Validate LeCart API key
+  const lecartApiKey = event.headers['x-api-key'];
+  if (lecartApiKey !== process.env.LECART_API_KEY) {
+    return {
+      statusCode: 401,
+      body: JSON.stringify({ error: 'Invalid API key' })
+    };
+  }
+
+  // CORS validation
+  const origin = event.headers.origin;
+  const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+
+  if (!allowedOrigins.includes('*') && !allowedOrigins.includes(origin)) {
+    return {
+      statusCode: 403,
+      body: JSON.stringify({ error: 'Origin not allowed' })
+    };
+  }
+
+  // Parse request
+  const { items, success_url, cancel_url, metadata } = JSON.parse(event.body);
+
+  try {
+    // Create Stripe Checkout Session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: items.map(item => ({
+        price: item.stripePriceId,
+        quantity: item.quantity
+      })),
+      mode: 'payment',
+      success_url,
+      cancel_url,
+      metadata
+    });
+
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': origin || '*'
+      },
+      body: JSON.stringify({ url: session.url })
+    };
+  } catch (error) {
+    console.error('Stripe error:', error);
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': origin || '*'
+      },
+      body: JSON.stringify({ error: error.message })
+    };
+  }
+};
+```
+
+### Environment Variables
+
+```bash
+STRIPE_RESTRICTED_KEY=rk_test_xxxxx  # Stripe restricted key
+LECART_API_KEY=your-custom-key       # Your custom API key
+ALLOWED_ORIGINS=https://yoursite.com # Comma-separated list or *
+```
+
+### Frontend Configuration
+
+```js
+LeCart.init({
+  lecartApiKey: 'your-custom-key',  // Must match LECART_API_KEY
+  checkoutEndpoint: 'https://your-api.com/checkout',
+  currency: 'USD',
+  language: 'en'
+});
+```
+
+---
+
+## 🆚 Cloud vs Self-Hosted
+
+| Feature | Cloud Service | Self-Hosted |
+|---------|--------------|-------------|
+| **Setup Time** | 5 minutes | 30-60 minutes |
+| **Infrastructure** | Managed for you | You manage |
+| **Scaling** | Automatic | You configure |
+| **Cost** | Free tier available | AWS/server costs |
+| **Control** | Standard features | Full customization |
+| **Updates** | Automatic | Manual |
+
+**Recommended for most users:** Start with the cloud service. You can always migrate to self-hosted later if needed.
+
+---
+
 ## 📝 License
 
 MIT
 
 ## 🔗 Links
 
+- [Dashboard](https://app.getlecart.com) - Create your free account
 - [GitHub Repository](https://github.com/nicolasverlhiac/lecart-js)
 - [npm Package](https://www.npmjs.com/package/lecart)
 - [Report Issues](https://github.com/nicolasverlhiac/lecart-js/issues)

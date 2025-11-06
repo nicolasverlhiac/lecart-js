@@ -5,7 +5,7 @@ import { initTranslations } from '../i18n';
 import { initCart } from './cart';
 
 export interface LeCartConfig {
-  stripePublicKey: string;
+  lecartApiKey: string;
   checkoutEndpoint: string;
   currency?: string;
   theme?: 'light' | 'dark' | 'custom';
@@ -42,8 +42,8 @@ export function init(userConfig: Partial<LeCartConfig>): void {
   config = { ...DEFAULT_CONFIG, ...userConfig } as LeCartConfig;
 
   // Vérification des configurations requises
-  if (!config.stripePublicKey) {
-    throw new Error('LeCart: stripePublicKey is required');
+  if (!config.lecartApiKey) {
+    throw new Error('LeCart: lecartApiKey is required');
   }
 
   if (!config.checkoutEndpoint) {

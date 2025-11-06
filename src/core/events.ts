@@ -17,22 +17,24 @@ export function setupEventListeners(): void {
       const name = addButton.getAttribute('data-product-name');
       const priceAttr = addButton.getAttribute('data-product-price');
       const image = addButton.getAttribute('data-product-image') || undefined;
-      
+      const variant = addButton.getAttribute('data-product-variant') || undefined;
+
       // Vérifier les données requises
       if (!stripePriceId || !name || !priceAttr) {
         console.error('LeCart: Missing required product attributes');
         return;
       }
-      
+
       // Convertir le prix en nombre
       const price = parseFloat(priceAttr);
-      
+
       // Ajouter l'article au panier
       addItem({
         stripePriceId,
         name,
         price,
-        image
+        image,
+        variant
       });
       
       // Notification visuelle (optionnel)

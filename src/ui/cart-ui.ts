@@ -54,23 +54,40 @@ export function updateCartDisplay(): void {
   // Vider le conteneur
   cartItemsContainer.innerHTML = '';
 
+  // Gérer le footer (cacher si vide, afficher si items)
+  const footerElement = cartElement.querySelector('.lecart-footer') as HTMLElement;
+
   if (items.length === 0) {
     cartItemsContainer.innerHTML = `<div class="lecart-empty">${t('cart.empty')}</div>`;
+    if (footerElement) {
+      footerElement.style.display = 'none';
+    }
     return;
   }
-  
+
+  // Afficher le footer et mettre à jour le sous-total
+  if (footerElement) {
+    footerElement.style.display = 'block';
+  }
+
+  const subtotalElement = cartElement.querySelector('.lecart-subtotal-value');
+  if (subtotalElement) {
+    subtotalElement.textContent = formatCurrency(getCartTotal(), config.currency || 'EUR');
+  }
+
   // Ajouter chaque article au panier
   items.forEach(item => {
     const itemElement = document.createElement('div');
     itemElement.className = 'lecart-item';
     itemElement.dataset.itemId = item.stripePriceId;
-    
+
     itemElement.innerHTML = `
       <div class="lecart-item-image">
         ${item.image ? `<img src="${item.image}" alt="${item.name}">` : ''}
       </div>
       <div class="lecart-item-details">
         <div class="lecart-item-name">${item.name}</div>
+        ${item.variant ? `<div class="lecart-item-variant">${item.variant}</div>` : ''}
         <div class="lecart-item-price">${formatCurrency(item.price, config.currency || 'EUR')}</div>
         <div class="lecart-item-quantity">
           <button class="lecart-quantity-dec">-</button>
@@ -80,18 +97,12 @@ export function updateCartDisplay(): void {
       </div>
       <button class="lecart-item-remove">&times;</button>
     `;
-    
+
     cartItemsContainer.appendChild(itemElement);
-    
+
     // Gestion des événements quantité et suppression
     setupItemEvents(itemElement, item);
   });
-  
-  // Mettre à jour le sous-total
-  const subtotalElement = cartElement.querySelector('.lecart-subtotal-value');
-  if (subtotalElement) {
-    subtotalElement.textContent = formatCurrency(getCartTotal(), config.currency || 'EUR');
-  }
 }
 
 function setupItemEvents(itemElement: HTMLElement, item: CartItem): void {

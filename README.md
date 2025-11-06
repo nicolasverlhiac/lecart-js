@@ -5,7 +5,6 @@ A lightweight JavaScript library to easily add a shopping cart with Stripe integ
 
 ## 🌟 Features
 
-- **Zero Backend Setup** - Use our free managed API (or self-host if you prefer)
 - **Simple Integration** - Add a cart with just HTML attributes
 - **Works with Static Sites** - Perfect for HTML/CSS/JS sites, GitHub Pages, Netlify, etc.
 - **Cart Persistence** - Products remain in cart between sessions
@@ -13,6 +12,7 @@ A lightweight JavaScript library to easily add a shopping cart with Stripe integ
 - **Multi-language** - Built-in support for multiple languages
 - **Customizable** - Themes and styles adaptable to your brand
 - **Lightweight** - <10kb gzipped
+- **Zero Backend Setup** - Use our free managed API (or self-host if you prefer)
 
 ## 📦 Installation
 
@@ -376,7 +376,7 @@ LeCart.init({
 | **Setup Time** | 5 minutes | 30-60 minutes |
 | **Infrastructure** | Managed for you | You manage |
 | **Scaling** | Automatic | You configure |
-| **Cost** | Free tier available | AWS/server costs |
+| **Cost** | Free | AWS/server costs |
 | **Control** | Standard features | Full customization |
 | **Updates** | Automatic | Manual |
 

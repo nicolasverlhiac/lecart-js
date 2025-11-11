@@ -181,6 +181,7 @@ Visit [app.getlecart.com](https://app.getlecart.com) and create a project to get
 | `position` | `string` | `'right'` | Cart position (`'right'` or `'left'`) |
 | `translations` | `object` | `{}` | Custom translations |
 | `cartLifetime` | `number` | `24` | Cart lifetime in hours |
+| `showCartBadge` | `boolean` | `true` | Show quantity badge on cart open buttons |
 
 **Cloud Service (Recommended):**
 ```js

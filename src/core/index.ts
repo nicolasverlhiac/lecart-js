@@ -18,6 +18,10 @@ export interface LeCartConfig {
   cssPath?: string; // Nouveau: chemin vers le fichier CSS
   showCartBadge?: boolean; // Afficher la bulle de quantité sur les boutons d'ouverture du panier
   openCartOnAdd?: boolean; // Ouvrir automatiquement le panier après l'ajout d'un produit
+  collectShippingAddress?: boolean; // Collecter l'adresse de livraison lors du checkout
+  shippingCountries?: string[]; // Pays autorisés pour la livraison (ISO 3166-1 alpha-2)
+  collectPhoneNumber?: boolean; // Collecter le numéro de téléphone lors du checkout
+  shippingOptions?: string[]; // IDs des Stripe Shipping Rates (ex: ['shr_xxxxx', 'shr_yyyyy'])
 }
 
 const DEFAULT_CONFIG: Partial<LeCartConfig> = {
@@ -30,7 +34,10 @@ const DEFAULT_CONFIG: Partial<LeCartConfig> = {
   cartLifetime: 24, // 24 heures par défaut
   cssPath: 'https://unpkg.com/lecart/dist/lecart.css',
   showCartBadge: true, // Bulle de quantité activée par défaut
-  openCartOnAdd: true // Ouvrir le panier automatiquement après ajout
+  openCartOnAdd: true, // Ouvrir le panier automatiquement après ajout
+  collectShippingAddress: false, // Désactivé par défaut
+  shippingCountries: ['US', 'CA', 'GB', 'FR', 'DE', 'ES', 'IT', 'NL', 'BE', 'CH', 'AT', 'IE', 'PT', 'DK', 'SE', 'NO', 'FI', 'PL', 'CZ', 'AU', 'NZ', 'JP', 'SG', 'HK'], // Principaux pays
+  collectPhoneNumber: false // Désactivé par défaut
 };
 
 let config: LeCartConfig;

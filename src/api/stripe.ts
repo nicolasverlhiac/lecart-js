@@ -25,6 +25,35 @@ export async function createCheckoutSession(data: CheckoutData): Promise<void> {
     successUrl.searchParams.set('payment_success', 'true');
     successUrl.searchParams.set('cart_id', cartId);
 
+    // Préparer le body de la requête
+    const requestBody: any = {
+      items: data.items,
+      success_url: successUrl.toString(),
+      cancel_url: window.location.href,
+      metadata: { cart_id: cartId }
+    };
+
+    // Ajouter la collecte d'adresse si activée
+    if (config.collectShippingAddress) {
+      requestBody.shipping_address_collection = {
+        allowed_countries: config.shippingCountries || ['US', 'CA', 'GB', 'FR', 'DE', 'ES', 'IT', 'NL', 'BE', 'CH', 'AT', 'IE', 'PT', 'DK', 'SE', 'NO', 'FI', 'PL', 'CZ', 'AU', 'NZ', 'JP', 'SG', 'HK']
+      };
+    }
+
+    // Ajouter la collecte de téléphone si activée
+    if (config.collectPhoneNumber) {
+      requestBody.phone_number_collection = {
+        enabled: true
+      };
+    }
+
+    // Ajouter les options de livraison si spécifiées
+    if (config.shippingOptions && config.shippingOptions.length > 0) {
+      requestBody.shipping_options = config.shippingOptions.map(rateId => ({
+        shipping_rate: rateId
+      }));
+    }
+
     // Appel à l'API de checkout
     const response = await fetch(checkoutEndpoint, {
       method: 'POST',
@@ -32,12 +61,7 @@ export async function createCheckoutSession(data: CheckoutData): Promise<void> {
         'Content-Type': 'application/json',
         'X-API-Key': lecartApiKey,
       },
-      body: JSON.stringify({
-        items: data.items,
-        success_url: successUrl.toString(),
-        cancel_url: window.location.href,
-        metadata: { cart_id: cartId }
-      }),
+      body: JSON.stringify(requestBody),
     });
     
     if (!response.ok) {

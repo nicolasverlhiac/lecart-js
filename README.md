@@ -189,6 +189,10 @@ Visit [app.getlecart.com](https://app.getlecart.com) and create a project to get
 | `cartLifetime` | `number` | `24` | Cart lifetime in hours |
 | `showCartBadge` | `boolean` | `true` | Show quantity badge on cart open buttons |
 | `openCartOnAdd` | `boolean` | `true` | Automatically open cart after adding a product |
+| `collectShippingAddress` | `boolean` | `false` | Collect shipping address at checkout |
+| `shippingCountries` | `string[]` | `['US', 'CA', 'GB', ...]` | Allowed countries for shipping (ISO 3166-1 alpha-2) |
+| `collectPhoneNumber` | `boolean` | `false` | Collect phone number at checkout |
+| `shippingOptions` | `string[]` | | Stripe Shipping Rate IDs (e.g., `['shr_xxx']`) |
 
 **Cloud Service (Recommended):**
 ```js
@@ -200,6 +204,80 @@ checkoutEndpoint: 'https://api.getlecart.com/create-checkout'
 ```js
 lecartApiKey: 'your-custom-key'  // Define your own
 checkoutEndpoint: 'https://your-domain.com/api/checkout'
+```
+
+---
+
+## 📫 Collecting Shipping Address and Phone Number
+
+LeCart allows you to collect shipping addresses and/or phone numbers during Stripe checkout. This is useful for physical products that need to be shipped or services that require customer contact information.
+
+### Basic Usage
+
+**Enable address collection:**
+```js
+LeCart.init({
+  lecartApiKey: 'lecart_xxxxx',
+  checkoutEndpoint: 'https://api.getlecart.com/create-checkout',
+  currency: 'USD',
+  language: 'en',
+  collectShippingAddress: true  // Enable shipping address collection
+});
+```
+
+**Enable phone number collection:**
+```js
+LeCart.init({
+  lecartApiKey: 'lecart_xxxxx',
+  checkoutEndpoint: 'https://api.getlecart.com/create-checkout',
+  currency: 'USD',
+  language: 'en',
+  collectPhoneNumber: true  // Enable phone number collection
+});
+```
+
+**Enable both:**
+```js
+LeCart.init({
+  lecartApiKey: 'lecart_xxxxx',
+  checkoutEndpoint: 'https://api.getlecart.com/create-checkout',
+  currency: 'USD',
+  language: 'en',
+  collectShippingAddress: true,
+  collectPhoneNumber: true
+});
+```
+
+### Advanced: Custom Shipping Countries
+
+By default, LeCart allows shipping to 24 major countries. You can customize this list:
+
+```js
+LeCart.init({
+  lecartApiKey: 'lecart_xxxxx',
+  checkoutEndpoint: 'https://api.getlecart.com/create-checkout',
+  currency: 'EUR',
+  language: 'fr',
+  collectShippingAddress: true,
+  shippingCountries: ['FR', 'BE', 'CH', 'LU']  // Only these countries
+});
+```
+
+**Default countries:** US, CA, GB, FR, DE, ES, IT, NL, BE, CH, AT, IE, PT, DK, SE, NO, FI, PL, CZ, AU, NZ, JP, SG, HK
+
+**Note:** Country codes must follow the ISO 3166-1 alpha-2 standard (2-letter codes).
+
+### Shipping Rates
+
+Display shipping options at checkout using [Stripe Shipping Rates](https://dashboard.stripe.com/settings/shipping-rates):
+
+```js
+LeCart.init({
+  lecartApiKey: 'lecart_xxxxx',
+  checkoutEndpoint: 'https://api.getlecart.com/create-checkout',
+  collectShippingAddress: true,
+  shippingOptions: ['shr_xxxxx', 'shr_yyyyy']  // Your Stripe Shipping Rate IDs
+});
 ```
 
 ---
@@ -331,11 +409,11 @@ exports.handler = async (event) => {
   }
 
   // Parse request
-  const { items, success_url, cancel_url, metadata } = JSON.parse(event.body);
+  const { items, success_url, cancel_url, metadata, shipping_address_collection, phone_number_collection, shipping_options } = JSON.parse(event.body);
 
   try {
-    // Create Stripe Checkout Session
-    const session = await stripe.checkout.sessions.create({
+    // Prepare session configuration
+    const sessionConfig = {
       payment_method_types: ['card'],
       line_items: items.map(item => ({
         price: item.stripePriceId,
@@ -345,7 +423,15 @@ exports.handler = async (event) => {
       success_url,
       cancel_url,
       metadata
-    });
+    };
+
+    // Add optional shipping and contact fields
+    if (shipping_address_collection) sessionConfig.shipping_address_collection = shipping_address_collection;
+    if (phone_number_collection) sessionConfig.phone_number_collection = phone_number_collection;
+    if (shipping_options) sessionConfig.shipping_options = shipping_options;
+
+    // Create Stripe Checkout Session
+    const session = await stripe.checkout.sessions.create(sessionConfig);
 
     return {
       statusCode: 200,

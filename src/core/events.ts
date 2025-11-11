@@ -1,5 +1,6 @@
 import { addItem } from './cart';
 import { openCart, updateCartBadges } from '../ui/cart-ui';
+import { getConfig } from './index';
 
 export function setupEventListeners(): void {
   // Écouter les clics sur les boutons d'ajout au panier
@@ -39,6 +40,12 @@ export function setupEventListeners(): void {
 
       // Mettre à jour les bulles de quantité
       updateCartBadges();
+
+      // Ouvrir le panier automatiquement si l'option est activée
+      const config = getConfig();
+      if (config.openCartOnAdd) {
+        openCart();
+      }
 
       // Notification visuelle (optionnel)
       showAddedToCartFeedback(addButton);

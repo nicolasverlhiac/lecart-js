@@ -188,6 +188,7 @@ Visit [app.getlecart.com](https://app.getlecart.com) and create a project to get
 | `translations` | `object` | `{}` | Custom translations |
 | `cartLifetime` | `number` | `24` | Cart lifetime in hours |
 | `showCartBadge` | `boolean` | `true` | Show quantity badge on cart open buttons |
+| `openCartOnAdd` | `boolean` | `true` | Automatically open cart after adding a product |
 
 **Cloud Service (Recommended):**
 ```js

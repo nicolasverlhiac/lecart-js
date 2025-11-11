@@ -17,6 +17,7 @@ export interface LeCartConfig {
   cartLifetime?: number; // en heures
   cssPath?: string; // Nouveau: chemin vers le fichier CSS
   showCartBadge?: boolean; // Afficher la bulle de quantité sur les boutons d'ouverture du panier
+  openCartOnAdd?: boolean; // Ouvrir automatiquement le panier après l'ajout d'un produit
 }
 
 const DEFAULT_CONFIG: Partial<LeCartConfig> = {
@@ -28,7 +29,8 @@ const DEFAULT_CONFIG: Partial<LeCartConfig> = {
   position: 'right',
   cartLifetime: 24, // 24 heures par défaut
   cssPath: 'https://unpkg.com/lecart/dist/lecart.css',
-  showCartBadge: true // Bulle de quantité activée par défaut
+  showCartBadge: true, // Bulle de quantité activée par défaut
+  openCartOnAdd: true // Ouvrir le panier automatiquement après ajout
 };
 
 let config: LeCartConfig;

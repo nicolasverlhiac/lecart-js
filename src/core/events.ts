@@ -1,5 +1,5 @@
 import { addItem } from './cart';
-import { openCart } from '../ui/cart-ui';
+import { openCart, updateCartBadges } from '../ui/cart-ui';
 
 export function setupEventListeners(): void {
   // Écouter les clics sur les boutons d'ajout au panier
@@ -36,7 +36,10 @@ export function setupEventListeners(): void {
         image,
         variant
       });
-      
+
+      // Mettre à jour les bulles de quantité
+      updateCartBadges();
+
       // Notification visuelle (optionnel)
       showAddedToCartFeedback(addButton);
     }

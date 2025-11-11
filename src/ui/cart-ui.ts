@@ -1,5 +1,5 @@
 import { LeCartConfig } from '../core';
-import { CartItem, getItems, getCartTotal, updateItemQuantity, removeItem } from '../core/cart';
+import { CartItem, getItems, getCartTotal, getCartCount, updateItemQuantity, removeItem } from '../core/cart';
 import { t } from '../i18n';
 import { createCheckoutSession } from '../api/stripe';
 
@@ -14,6 +14,7 @@ export function initUI(configObj: LeCartConfig): void {
   loadStylesheet();
 
   createCartElements();
+  updateCartBadges(); // Initialiser les bulles de quantité
   isInitialized = true;
 }
 
@@ -62,6 +63,8 @@ export function updateCartDisplay(): void {
     if (footerElement) {
       footerElement.style.display = 'none';
     }
+    // Mettre à jour les bulles de quantité (pour les supprimer)
+    updateCartBadges();
     return;
   }
 
@@ -103,6 +106,9 @@ export function updateCartDisplay(): void {
     // Gestion des événements quantité et suppression
     setupItemEvents(itemElement, item);
   });
+
+  // Mettre à jour les bulles de quantité
+  updateCartBadges();
 }
 
 function setupItemEvents(itemElement: HTMLElement, item: CartItem): void {
@@ -190,11 +196,45 @@ function formatCurrency(amount: number, currency: string): string {
 function initiateCheckout(): void {
   const items = getItems();
   if (items.length === 0) return;
-  
+
   createCheckoutSession({
     items: items.map(item => ({
       stripePriceId: item.stripePriceId,
       quantity: item.quantity
     }))
+  });
+}
+
+/**
+ * Met à jour les bulles de quantité sur tous les boutons d'ouverture du panier
+ */
+export function updateCartBadges(): void {
+  // Si la fonctionnalité est désactivée, on ne fait rien
+  if (!config.showCartBadge) return;
+
+  const cartCount = getCartCount();
+  const cartOpenButtons = document.querySelectorAll('[data-lecart-open]');
+
+  cartOpenButtons.forEach((button) => {
+    // Chercher une bulle existante
+    let badge = button.querySelector('.lecart-badge') as HTMLElement;
+
+    // Si le panier est vide, supprimer la bulle
+    if (cartCount === 0) {
+      if (badge) {
+        badge.remove();
+      }
+      return;
+    }
+
+    // Si la bulle n'existe pas, la créer
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.className = 'lecart-badge';
+      button.appendChild(badge);
+    }
+
+    // Mettre à jour le contenu de la bulle
+    badge.textContent = cartCount.toString();
   });
 }

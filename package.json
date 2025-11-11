@@ -22,6 +22,7 @@
         "dev": "rollup -c -w",
         "build": "rollup -c",
         "test": "jest",
+        "test:coverage": "jest --coverage",
         "lint": "eslint src/**/*.ts",
         "release": "./scripts/release.sh",
         "release:patch": "./scripts/release.sh patch",
@@ -41,6 +42,9 @@
     ],
     "author": "Nicolas Verlhiac",
     "license": "MIT",
+    "engines": {
+        "node": ">=24.0.0"
+    },
     "devDependencies": {
         "@jest/globals": "^30.2.0",
         "@rollup/plugin-terser": "^0.4.4",

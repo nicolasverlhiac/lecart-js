@@ -1,6 +1,12 @@
 
 # LeCart
 
+[![Build Status](https://github.com/nicolasverlhiac/lecart-js/actions/workflows/build-test.yml/badge.svg)](https://github.com/nicolasverlhiac/lecart-js/actions/workflows/build-test.yml)
+[![codecov](https://codecov.io/gh/nicolasverlhiac/lecart-js/branch/main/graph/badge.svg)](https://codecov.io/gh/nicolasverlhiac/lecart-js)
+[![npm version](https://img.shields.io/npm/v/lecart.svg)](https://www.npmjs.com/package/lecart)
+[![npm downloads](https://img.shields.io/npm/dm/lecart.svg)](https://www.npmjs.com/package/lecart)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A lightweight JavaScript library to easily add a shopping cart with Stripe integration to any HTML/CSS website.
 
 ## 🌟 Features
